@@ -15,7 +15,7 @@ const processHistoryFile = async (file: File) => {
         amount: i["Amount (SIN)"],
         id: i.ID,
       };
-      history.push(<HistoryLine>historyLine);
+      history.push(historyLine);
     });
     return history;
   } catch {

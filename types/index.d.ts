@@ -10,10 +10,12 @@ type HistoryLine = {
 
 type Infinitynode = {
   address: String;
+  nicename: String;
   rewards: number;
   history: Array<HistoryLine>;
   burned: number;
   roi: number;
+  isActive: Boolean;
 };
 
 export { HistoryLine, Infinitynode };

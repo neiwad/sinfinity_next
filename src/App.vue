@@ -1,17 +1,19 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <Uploader />
+  <div>
+    <Upload v-if="!nodes.length" />
+    <template v-else>
+      <RewardsPerNode />
+      ROI {{ useInfinitinodes().globalRoi }}
+    </template>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<script setup lang="ts">
+import Upload from '@/views/Upload.vue'
+import { useInfinitinodes } from '@/stores/infinitynodes';
+import { computed } from 'vue';
+
+const nodes = computed(() => {
+  return useInfinitinodes().nodes
+})
+</script>

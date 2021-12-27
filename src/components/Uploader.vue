@@ -1,12 +1,20 @@
 <template>
     <div>
-        Uploader
-        <input type="file" accept=".csv" @change="fileSelected" />
+        <input ref="inputFile" type="file" accept=".csv" class="hidden" @change="fileSelected" />
+        <button class="bg-red-300" @click="openInput()">Upload</button>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { processHistoryFile, processInfinitynodes } from '@/composables';
+import { useInfinitinodes } from '@/stores/infinitynodes';
+
+const infinitynodes = useInfinitinodes()
+const inputFile = ref<HTMLInputElement>()
+const openInput = () => {
+    inputFile.value && inputFile.value.click()
+}
 
 const fileSelected = async (event: Event) => {
     const input = event.target as HTMLInputElement;
@@ -14,6 +22,6 @@ const fileSelected = async (event: Event) => {
     const file = input.files[0]
     const history = await processHistoryFile(file)
     const result = processInfinitynodes(history)
-    console.log(result);
+    infinitynodes.setInfinitynodes(result)
 }
 </script>
