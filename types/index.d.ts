@@ -18,4 +18,10 @@ type Infinitynode = {
   isActive: Boolean;
 };
 
-export { HistoryLine, Infinitynode };
+type MonthlyRewards = {
+  niceMonth: String;
+  rewards: Array<number>;
+  totalRewards: number;
+};
+
+export { HistoryLine, Infinitynode, MonthlyRewards };

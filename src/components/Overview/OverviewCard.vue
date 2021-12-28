@@ -1,8 +1,14 @@
 <template>
-    <div class="border-1 border-gray-200 rounded h-[150px]">
-        <div>Rewards</div>
-        <div class="h-[120px] relative">
-            <canvas id="rpm_chart" ref="root" height="120px" responsive></canvas>
+    <div class="border-1 border-gray-200 rounded h-[280px]">
+        <div class="flex justify-between h-[100px] p-4">
+            <div class="flex flex-col">
+                <span>{{ title }}</span>
+                <span class="text-3xl font-bold">{{ value }}</span>
+            </div>
+            <span>{{ progress }}%</span>
+        </div>
+        <div class="h-[180px] relative">
+            <canvas id="rpm_chart" ref="root" height="180px" responsive></canvas>
         </div>
     </div>
 </template>
@@ -13,17 +19,22 @@ import { onMounted, ref } from "vue";
 
 const root = ref<HTMLCanvasElement>();
 const props = defineProps({
-    color: String
+    color: String,
+    title: String,
+    value: String,
+    graphLabels: Array,
+    graphValues: Array,
+    progress: Number
 })
 
 onMounted(() => {
     const ctx = root.value && root.value.getContext("2d");
-    const labels = [65, 59, 80, 81, 56, 55, 40]
+    const labels = props.graphLabels
     const data = {
         labels: labels,
         datasets: [{
             label: 'My First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: props.graphValues,
             fill: {
                 target: 'origin',
                 above: `${props.color}10`,
@@ -40,14 +51,15 @@ onMounted(() => {
             options: {
                 scales: {
                     x: {
-                        grid: {
-                            display: false
-                        }
+                        display: false,
                     },
                     y: {
-                        grid: {
-                            display: false
-                        }
+                        display: false,
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 0
                     }
                 },
                 plugins: {
