@@ -1,10 +1,5 @@
 <template>
-    <div class="flex flex-col justify-between w-full h-full">
-        <h2 class="font-bold text-4xl">Rewards by masternodes</h2>
-        <div class="w-full h-[400px] relative">
-            <canvas id="rpm_chart" ref="root" responsive></canvas>
-        </div>
-    </div>
+    <canvas id="rpm_chart" ref="root"></canvas>
 </template>
 
 <script setup lang="ts">
@@ -34,6 +29,10 @@ onMounted(() => {
         new Chart(ctx, {
             type: 'bar',
             data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
         });
     }
 });

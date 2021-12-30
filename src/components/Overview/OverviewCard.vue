@@ -2,13 +2,13 @@
     <div class="border-1 border-gray-200 rounded h-[280px]">
         <div class="flex justify-between h-[100px] p-4">
             <div class="flex flex-col">
-                <span>{{ title }}</span>
+                <span class="text-gray-400 font-thin">{{ title }}</span>
                 <span class="text-3xl font-bold">{{ value }}</span>
             </div>
             <span>{{ progress }}%</span>
         </div>
-        <div class="h-[180px] relative">
-            <canvas id="rpm_chart" ref="root" height="180px" responsive></canvas>
+        <div class="h-[180px] w-full relative">
+            <canvas id="rpm_chart" ref="root" height="180px"></canvas>
         </div>
     </div>
 </template>
@@ -28,6 +28,7 @@ const props = defineProps({
 })
 
 onMounted(() => {
+
     const ctx = root.value && root.value.getContext("2d");
     const labels = props.graphLabels
     const data = {
@@ -49,6 +50,8 @@ onMounted(() => {
             type: 'line',
             data: data,
             options: {
+                maintainAspectRatio: false,
+                responsive: true,
                 scales: {
                     x: {
                         display: false,

@@ -24,4 +24,9 @@ type MonthlyRewards = {
   totalRewards: number;
 };
 
-export { HistoryLine, Infinitynode, MonthlyRewards };
+type NodesPerMonth = {
+  niceMonth: String;
+  nodes: Array<String>;
+};
+
+export { HistoryLine, Infinitynode, MonthlyRewards, NodesPerMonth };

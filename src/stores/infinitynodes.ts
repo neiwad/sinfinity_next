@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Infinitynode, MonthlyRewards } from "../../types/index";
+import { Infinitynode, MonthlyRewards, NodesPerMonth } from "../../types/index";
 import additionner from "@/helpers/additionner";
 
 export const useInfinitinodes = defineStore("infinitynodes", {
@@ -27,9 +27,8 @@ export const useInfinitinodes = defineStore("infinitynodes", {
         .flat(1);
 
       history.forEach((_h) => {
-        const date = new Date(_h.date);
+        const date = new Date(_h.date.toString());
         const niceMonth = date.toLocaleDateString("fr-CA", {
-          // you can use undefined as first argument
           year: "numeric",
           month: "2-digit",
         });
@@ -52,6 +51,39 @@ export const useInfinitinodes = defineStore("infinitynodes", {
       });
 
       return rewardsPerMonth.sort((a, b) =>
+        a.niceMonth > b.niceMonth ? 1 : b.niceMonth > a.niceMonth ? -1 : 0
+      );
+    },
+    monthlyNodes: (state) => {
+      const nodesPerMonth = [] as Array<NodesPerMonth>;
+
+      const history = state.nodes
+        .map((_n) => _n.history.filter((_h) => _h.type === "Mined"))
+        .flat(1);
+
+      history.forEach((_h) => {
+        const date = new Date(_h.date.toString());
+        const niceMonth = date.toLocaleDateString("fr-CA", {
+          year: "numeric",
+          month: "2-digit",
+        });
+
+        const index = nodesPerMonth.findIndex(
+          (_r) => _r.niceMonth === niceMonth
+        );
+
+        if (index !== -1) {
+          if (nodesPerMonth[index].nodes.indexOf(_h.address) === -1) {
+            nodesPerMonth[index].nodes.push(_h.address);
+          }
+        } else {
+          nodesPerMonth.push({
+            niceMonth: niceMonth,
+            nodes: [_h.address],
+          });
+        }
+      });
+      return nodesPerMonth.sort((a, b) =>
         a.niceMonth > b.niceMonth ? 1 : b.niceMonth > a.niceMonth ? -1 : 0
       );
     },

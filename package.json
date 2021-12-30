@@ -9,6 +9,7 @@
     "coverage": "vitest --coverage"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "chart.js": "^3.7.0",
     "papaparse": "^5.3.1",
     "pinia": "^2.0.9",

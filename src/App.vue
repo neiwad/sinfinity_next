@@ -1,10 +1,11 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto py-4">
     <Upload v-if="!nodes.length" />
     <template v-else>
-      <Overview />
-      <RewardsPerNode />
-      ROI {{ useInfinitinodes().globalRoi }}
+      <div class="space-y-4">
+        <Overview />
+        <Stats />
+      </div>
     </template>
   </div>
 </template>
@@ -17,4 +18,5 @@ import { computed } from 'vue';
 const nodes = computed(() => {
   return useInfinitinodes().nodes
 })
+
 </script>

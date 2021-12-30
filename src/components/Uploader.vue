@@ -9,6 +9,7 @@
 import { ref } from 'vue'
 import { processHistoryFile, processInfinitynodes } from '@/composables';
 import { useInfinitinodes } from '@/stores/infinitynodes';
+import { useHistory } from '@/stores/history';
 
 const infinitynodes = useInfinitinodes()
 const inputFile = ref<HTMLInputElement>()
@@ -21,6 +22,7 @@ const fileSelected = async (event: Event) => {
     if (!input.files?.length) return
     const file = input.files[0]
     const history = await processHistoryFile(file)
+    useHistory().setHistory(history)
     const result = processInfinitynodes(history)
     infinitynodes.setInfinitynodes(result)
 }
